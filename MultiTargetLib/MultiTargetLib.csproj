@@ -1,0 +1,32 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+
+  <PropertyGroup>
+    <AssemblyName>MultiTargetLib</AssemblyName>
+    <RootNamespace>MultiTargetLib</RootNamespace>  
+    <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid81</TargetFrameworks>
+    <_WriteTelemetryProperties>false</_WriteTelemetryProperties>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="platforms\**\*.cs" />
+    <None Include="platforms\**\*.cs" />
+    <None Include="Resources\*.cs" />
+    <Compile Remove="Resources\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+    <Compile Include="platforms\common\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+    <Compile Include="platforms\ios\**\*.cs" />
+    <Compile Include="platforms\common\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <Compile Include="platforms\android\**\*.cs" />
+    <Compile Include="platforms\common\**\*.cs" />
+    <AndroidResource Include="Resources\**\*.xml" SubType="Designer" Generator="MSBuild:UpdateAndroidResources" />
+    <AndroidResource Include="Resources\**\*.axml" SubType="Designer" Generator="MSBuild:UpdateAndroidResources" />
+  </ItemGroup>
+</Project>
