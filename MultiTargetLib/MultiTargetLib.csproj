@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>MultiTargetLib</AssemblyName>
     <RootNamespace>MultiTargetLib</RootNamespace>  
-    <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid81</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid81;uap10.0.16299</TargetFrameworks>
     <_WriteTelemetryProperties>false</_WriteTelemetryProperties>
   </PropertyGroup>
   
@@ -12,6 +12,11 @@
     <None Include="platforms\**\*.cs" />
     <None Include="Resources\*.cs" />
     <Compile Remove="Resources\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('uap')) ">
+    <Compile Include="platforms\uap\**\*.cs" />
+    <Compile Include="platforms\common\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
